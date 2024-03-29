@@ -28,14 +28,30 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
+import AlertError from "@/components/AlertError";
+
 import type { RecipeResponse } from "@/../netlify/functions/recipe";
 export default function Recipe() {
   const recipe = useLoaderData() as RecipeResponse;
+
+  if (!recipe) {
+    const currentDate = new Date();
+    const hoursUntilAPIReset = 24 - currentDate.getUTCHours();
+    const minutesUntilAPIReset = 60 - currentDate.getUTCMinutes();
+
+    return (
+      <AlertError
+        className="max-w-96 mx-auto"
+        description={`Could not get recipes.
+          This could be due to the daily limit being reached (150 requests).
+          Please try again in ${hoursUntilAPIReset} hours and ${minutesUntilAPIReset} minutes.`}
+      />
+    );
+  }
 
   const recipeSourceOrigin = new URL(recipe.sourceUrl).host;
 
