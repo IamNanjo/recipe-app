@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import axios from "axios";
+import axios, { type AxiosError } from "axios";
 
 import type { Handler, HandlerResponse } from "@netlify/functions";
 
@@ -68,14 +68,13 @@ const handler: Handler = async (request, _context) => {
           headers: res.headers,
         };
       })
-      .catch((err) => {
-        console.error(err);
-        return {
-          statusCode: 400,
-        };
+      .catch((err: AxiosError) => {
+        const statusCode =
+          (err.response?.data as { code: number } | undefined)?.code || 400;
+
+        return { statusCode };
       }) as Promise<HandlerResponse>;
   } catch (err) {
-    console.error(err);
     return { statusCode: 500 };
   }
 };

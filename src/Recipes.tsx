@@ -12,6 +12,27 @@ export default function Recipes() {
   const recipes = recipesResponse?.results;
   const recipesExist = recipes && recipes.length;
 
+  const currentDate = new Date();
+  const hoursUntilAPIReset = 24 - currentDate.getUTCHours();
+  const minutesUntilAPIReset = 60 - currentDate.getUTCMinutes();
+
+  if (!recipes) {
+    return (
+      <AlertError
+        className="max-w-96 mx-auto"
+        description={`Could not get recipes.
+          This could be due to the daily limit being reached (150 requests).
+          Please try again in ${hoursUntilAPIReset} hours and ${minutesUntilAPIReset} minutes.`}
+      />
+    );
+  }
+
+  if (!recipes.length) {
+    return (
+      <AlertError className="max-w-96 mx-auto" description="No recipes found" />
+    );
+  }
+
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(min(18rem,100%),1fr))] gap-3 w-full max-w-[90rem]">
       {!!recipesExist &&
@@ -34,12 +55,6 @@ export default function Recipes() {
             </CardContent>
           </Card>
         ))}
-      {!recipesExist && (
-        <AlertError
-          className="max-w-96 mx-auto"
-          description="No recipes found"
-        />
-      )}
     </div>
   );
 }

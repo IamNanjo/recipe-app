@@ -53,7 +53,16 @@ const router = createBrowserRouter(
           errorElement={<AlertError description="Recipe loading failed" />}
         />
       </Route>
-      <Route path="/recipes/:id" element={<Recipe />} loader={recipeLoader} />
+      <Route
+        path="/recipes/:id"
+        element={<Recipe />}
+        loader={recipeLoader}
+        errorElement={
+          <main>
+            <AlertError description="Recipe loading failed" />
+          </main>
+        }
+      />
     </Route>
   )
 );

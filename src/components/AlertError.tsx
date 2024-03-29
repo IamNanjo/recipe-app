@@ -13,7 +13,7 @@ export default function AlertError({ title, description, ...props }: Props) {
   const error = useRouteError();
 
   return (
-    <Alert className="max-w-96 font-bold" variant="destructive" {...props}>
+    <Alert className="max-w-96 m-auto font-bold" variant="destructive" {...props}>
       <AlertCircle className="h-4 w-4" />
       <AlertTitle className="font-bold">{title ?? "Error"}</AlertTitle>
       <AlertDescription>
