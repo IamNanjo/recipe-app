@@ -58,8 +58,16 @@ const router = createBrowserRouter(
         element={<Recipe />}
         loader={recipeLoader}
         errorElement={
-          <main>
+          <main className="flex flex-col justify-center items-center p-4">
             <AlertError description="Recipe loading failed" />
+          </main>
+        }
+      />
+      <Route
+        path="*"
+        element={
+          <main className="flex flex-col justify-center items-center p-4">
+            <AlertError description="This route does not exist" />
           </main>
         }
       />
