@@ -48,6 +48,13 @@ const handler: Handler = async (request, _context) => {
         `https://api.spoonacular.com/recipes/complexSearch?${queryParamString}`
       )
       .then((res) => {
+        for (let i = 0, len = res.data.results.length; i < len; i++) {
+          res.data.results[i].image = res.data.results[i].image.replace(
+            "312x231",
+            "636x393"
+          );
+        }
+
         return {
           statusCode: res.status,
           body: JSON.stringify(res.data),
