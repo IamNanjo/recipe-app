@@ -60,8 +60,11 @@ const handler: Handler = async (request, _context) => {
     const query = `id=${id}&apiKey=${API_KEY}`;
 
     return axios
-      .get(`https://api.spoonacular.com/recipes/${id}/information?${query}`)
+      .get<RecipeResponse>(
+        `https://api.spoonacular.com/recipes/${id}/information?${query}`
+      )
       .then((res) => {
+        res.data.image = res.data.image.replace("312x231", "636x393");
         return {
           statusCode: res.status,
           body: JSON.stringify(res.data),
