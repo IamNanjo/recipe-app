@@ -10,3 +10,5 @@ Hosted on [Netlify](https://app.netlify.com/).
 ![Frontpage search](search.png)
 
 ![Search results](results.png)
+
+![Recipe: salmon with roasted vegetables](recipe.png)
